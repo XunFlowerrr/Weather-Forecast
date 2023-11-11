@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.weatherapp.R
+import com.example.weatherapp.Domains.Hourly
 
 class HourlyAdapters : RecyclerView.Adapter<HourlyAdapters.viewHolder>() {
 
-    var items : ArrayList<Hourly> = ArrayList()
+    var items: ArrayList<Hourly> = ArrayList()
     var context : Context? = null
+
+
+
 
     class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var hourText: TextView? = null
@@ -20,9 +25,9 @@ class HourlyAdapters : RecyclerView.Adapter<HourlyAdapters.viewHolder>() {
         var pic : ImageView? = null
         constructor(itemView: View, hourText: TextView?, tempText: TextView?, pic: ImageView?) : this(itemView) {
             super.itemView
-//            this.hourText = itemView.findViewById(R.id.)
-            this.tempText = tempText
-            this.pic = pic
+            this.hourText = itemView.findViewById(R.id.hourlyText)
+            this.tempText = itemView.findViewById(R.id.tempText)
+            this.pic = itemView.findViewById(R.id.pic)
         }
 
     }
@@ -30,16 +35,21 @@ class HourlyAdapters : RecyclerView.Adapter<HourlyAdapters.viewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder
     {
         var inflate : View = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_hourly, parent, false)
-        context = parent.context
+        var context : Context = parent.context
         return viewHolder(inflate)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return items.size
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.hourText?.text = items[position].getHour()
+        holder.tempText?.text = items[position].getTemp().toString()+"°"
+
+        var drawableResourceId: Int = holder.itemView.resources.getIdentifier(items[position].getPicPath(), "drawable", holder.itemView.context.packageName)
+
+        Glide.with(holder.itemView.context).load(drawableResourceId).into(holder.itemView.findViewById(R.id.pic))
     }
 
 }

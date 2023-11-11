@@ -2,45 +2,40 @@ package com.example.weatherapp.Activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.weatherapp.ui.theme.WeatherAppTheme
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.example.weatherapp.Adapters.HourlyAdapters
+import com.example.weatherapp.R
+import com.example.weatherapp.Domains.Hourly
+import kotlin.collections.ArrayList
 
 class MainActivity : ComponentActivity() {
+    private lateinit var adapterHourly: HourlyAdapters
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            WeatherAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
-        }
+        setContentView(R.layout.activity_main)
+
+        // Initialize adapter and recyclerView here
+        recyclerView = findViewById(R.id.recyclerView_1)
+        adapterHourly = HourlyAdapters()
+
+        initRecyclerView()
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    private fun initRecyclerView() {
+        val itemsinit: ArrayList<Hourly> = ArrayList()
+        itemsinit.add(Hourly("12:00", 12, "sunny"))
+        itemsinit.add(Hourly("13:00", 13, "sunny"))
+        itemsinit.add(Hourly("14:00", 14, "sunny"))
+        itemsinit.add(Hourly("15:00", 15, "sunny"))
+        itemsinit.add(Hourly("16:00", 16, "sunny"))
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WeatherAppTheme {
-        Greeting("Android")
+        adapterHourly.items = itemsinit
+
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = adapterHourly
     }
 }
