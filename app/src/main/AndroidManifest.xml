@@ -15,8 +15,8 @@
         <activity
             android:name=".activities.FutureActivity"
             android:exported="false"
-            android:theme="@style/Theme.WeatherApp"/>
-
+            android:label="@string/title_activity_future"
+            android:theme="@style/Theme.WeatherApp" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"

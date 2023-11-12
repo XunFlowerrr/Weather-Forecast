@@ -19,7 +19,7 @@ class FutureAdapter : RecyclerView.Adapter<FutureAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var dayText: TextView = itemView.findViewById(R.id.dayText)
-        var picPath : ImageView = itemView.findViewById(R.id.pic)
+        var picPath : ImageView = itemView.findViewById(R.id.picFuture)
         var status : TextView = itemView.findViewById(R.id.statusText)
         var lowText : TextView = itemView.findViewById(R.id.lowText)
         var highText : TextView = itemView.findViewById(R.id.highText)
@@ -48,7 +48,7 @@ class FutureAdapter : RecyclerView.Adapter<FutureAdapter.ViewHolder>() {
 //        var drawableResourceId: Int = holder.itemView.resources.getIdentifier(items[position].picPath, "drawable", holder.itemView.context.packageName)
         val drawableResourceId: Int = holder.itemView.resources.getIdentifier(items[position].picPath, "drawable", holder.itemView.context.packageName)
 
-        Glide.with(holder.itemView.context).load(drawableResourceId).into(holder.itemView.findViewById(R.id.pic))
+        Glide.with(holder.itemView.context).load(drawableResourceId).into(holder.itemView.findViewById(R.id.picFuture))
     }
 
 }

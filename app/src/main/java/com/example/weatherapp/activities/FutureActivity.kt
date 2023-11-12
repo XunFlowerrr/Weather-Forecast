@@ -10,6 +10,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.adapters.FutureAdapter
 import com.example.weatherapp.domains.FutureDomain
 
+
 class FutureActivity : AppCompatActivity() {
 
     private lateinit var adapterFuture: FutureAdapter
@@ -49,11 +50,11 @@ class FutureActivity : AppCompatActivity() {
         adapterFuture.items = itemListInit
 
 
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapterFuture
 
 
     }
-
-
 }
+
+
