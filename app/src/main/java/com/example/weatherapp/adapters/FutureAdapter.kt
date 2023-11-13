@@ -30,7 +30,7 @@ class FutureAdapter : RecyclerView.Adapter<FutureAdapter.ViewHolder>() {
             )
 
             Glide.with(itemView.context).load(drawableResourceId)
-                .into(itemView.findViewById(R.id.pic))
+                .into(itemView.findViewById(R.id.picFuture))
         }
     }
 
