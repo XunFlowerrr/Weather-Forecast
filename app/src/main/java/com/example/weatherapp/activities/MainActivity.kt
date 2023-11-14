@@ -2,19 +2,17 @@ package com.example.weatherapp.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-<<<<<<< Updated upstream
-=======
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.R
->>>>>>> Stashed changes
 import com.example.weatherapp.adapters.HourlyAdapter
-import com.example.weatherapp.R
+import com.example.weatherapp.api.CurrentWeatherFetcher
+import com.example.weatherapp.domains.CurrentWeatherDomain
 import com.example.weatherapp.domains.Hourly
-import kotlin.collections.ArrayList
 
 class MainActivity : ComponentActivity() {
     private lateinit var adapterHourly: HourlyAdapter
@@ -30,8 +28,6 @@ class MainActivity : ComponentActivity() {
 
         initRecyclerView()
         setVariable()
-<<<<<<< Updated upstream
-=======
 
         initCurrentWeatherFetcher(CurrentWeatherFetcher(BuildConfig.Weather_API_KEY))
     }
@@ -69,12 +65,11 @@ class MainActivity : ComponentActivity() {
 
             }
         }
->>>>>>> Stashed changes
     }
 
     private fun setVariable() {
-        val nextButton : TextView = findViewById(R.id.nextButton)
-        nextButton.setOnClickListener{view ->
+        val nextButton: TextView = findViewById(R.id.nextButton)
+        nextButton.setOnClickListener { view ->
             val intent = Intent(this, FutureActivity::class.java)
             startActivity(intent)
         }

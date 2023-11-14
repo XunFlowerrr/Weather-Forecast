@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/currentStatusText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mostly Cloudy"
@@ -40,7 +40,7 @@
 
             
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/currentDateAndTimeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mon June 17 | 10:00 AM"
@@ -51,7 +51,7 @@
                 />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/currentTempText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="20°C"
@@ -63,7 +63,7 @@
                 />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/currentLocationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="H 22°C | L 18°C"
@@ -94,7 +94,7 @@
                         android:src="@drawable/rain" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/currentRainText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="22%"
@@ -129,7 +129,7 @@
                         android:src="@drawable/wind" />
 
                     <TextView
-                        android:id="@+id/windStatic"
+                        android:id="@+id/currentWindSpeedText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="12 km/h"
@@ -164,7 +164,7 @@
                         android:src="@drawable/humidity" />
 
                     <TextView
-                        android:id="@+id/humidityStatic"
+                        android:id="@+id/currentHumidityText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="22%"
