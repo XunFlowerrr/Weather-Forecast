@@ -6,6 +6,11 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+<<<<<<< Updated upstream
+=======
+import com.example.weatherapp.BuildConfig
+import com.example.weatherapp.R
+>>>>>>> Stashed changes
 import com.example.weatherapp.adapters.HourlyAdapter
 import com.example.weatherapp.R
 import com.example.weatherapp.domains.Hourly
@@ -25,6 +30,46 @@ class MainActivity : ComponentActivity() {
 
         initRecyclerView()
         setVariable()
+<<<<<<< Updated upstream
+=======
+
+        initCurrentWeatherFetcher(CurrentWeatherFetcher(BuildConfig.Weather_API_KEY))
+    }
+
+    private fun initCurrentWeatherFetcher(currentWeatherFetcher: CurrentWeatherFetcher) {
+        var currentWeatherDomain : CurrentWeatherDomain
+        currentWeatherFetcher.fetchCurrentWeather("Bangkok") { response ->
+            if (response != null) {
+
+                currentWeatherDomain = currentWeatherFetcher.parseCurrentWeather(response)
+                Log.d("MainActivity", "Thread$currentWeatherDomain")
+
+                var currentStatus: TextView = findViewById(R.id.currentStatusText)
+                currentStatus.text = currentWeatherDomain.currentStatus
+
+                var currentTemp: TextView = findViewById(R.id.currentTempText)
+                currentTemp.text = currentWeatherDomain.currentTemp.toString()
+
+                var currentDate: TextView = findViewById(R.id.currentDateAndTimeText)
+                currentDate.text =
+                    currentWeatherDomain.currentDate + " " + currentWeatherDomain.currentTime
+
+                var currentRain: TextView = findViewById(R.id.currentRainText)
+                currentRain.text = (currentWeatherDomain.currentRain * 100).toString() + " %"
+
+                var currentWindSpeed: TextView = findViewById(R.id.currentWindSpeedText)
+                currentWindSpeed.text = currentWeatherDomain.currentWindSpeed.toString() + " km/h"
+
+                var currentHumidity: TextView = findViewById(R.id.currentHumidityText)
+                currentHumidity.text = currentWeatherDomain.currentHumidity.toString() + "%"
+
+                var currentLocation: TextView = findViewById(R.id.currentLocationText)
+                currentLocation.text = currentWeatherDomain.currentLocation
+
+
+            }
+        }
+>>>>>>> Stashed changes
     }
 
     private fun setVariable() {
