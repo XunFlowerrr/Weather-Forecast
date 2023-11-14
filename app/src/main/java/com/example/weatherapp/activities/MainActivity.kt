@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.R
 import com.example.weatherapp.adapters.HourlyAdapter
+import com.example.weatherapp.api.CurrentLocationFetcher
 import com.example.weatherapp.api.CurrentWeatherFetcher
 import com.example.weatherapp.domains.CurrentWeatherDomain
 import com.example.weatherapp.domains.Hourly
@@ -29,12 +30,21 @@ class MainActivity : ComponentActivity() {
         initRecyclerView()
         setVariable()
 
-        initCurrentWeatherFetcher(CurrentWeatherFetcher(BuildConfig.Weather_API_KEY))
+        var currentLocationFetcher : CurrentLocationFetcher = CurrentLocationFetcher(this)
+        currentLocationFetcher.fetchLocation(this){ response ->
+            if (response != null) {
+                Log.d("MainActivity", "$response")
+                initCurrentWeatherFetcher(CurrentWeatherFetcher(BuildConfig.Weather_API_KEY), response)
+            }
+
+        }
+
+
     }
 
-    private fun initCurrentWeatherFetcher(currentWeatherFetcher: CurrentWeatherFetcher) {
+    private fun initCurrentWeatherFetcher(currentWeatherFetcher: CurrentWeatherFetcher, query : String) {
         var currentWeatherDomain : CurrentWeatherDomain
-        currentWeatherFetcher.fetchCurrentWeather("Bangkok") { response ->
+        currentWeatherFetcher.fetchCurrentWeather(query) { response ->
             if (response != null) {
 
                 currentWeatherDomain = currentWeatherFetcher.parseCurrentWeather(response)
