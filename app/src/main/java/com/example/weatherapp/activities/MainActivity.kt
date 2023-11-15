@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setVariable()
 
         var currentLocationFetcher : CurrentLocationFetcher = CurrentLocationFetcher(this)
-        currentLocationFetcher.fetchLocation(){ response ->
+        currentLocationFetcher.fetchLastLocation(){response ->
             if (response != null) {
                 Log.d("MainActivity", "$response")
 
