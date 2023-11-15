@@ -31,9 +31,10 @@ class MainActivity : ComponentActivity() {
         setVariable()
 
         var currentLocationFetcher : CurrentLocationFetcher = CurrentLocationFetcher(this)
-        currentLocationFetcher.fetchLocation(this){ response ->
+        currentLocationFetcher.fetchLastLocation(){response ->
             if (response != null) {
                 Log.d("MainActivity", "$response")
+
                 initCurrentWeatherFetcher(CurrentWeatherFetcher(BuildConfig.Weather_API_KEY), response)
             }
 
