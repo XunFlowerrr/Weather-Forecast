@@ -18,6 +18,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "Weather_API_KEY", "\"${project.property("Weather_API_Key")}\"")
     }
 
     buildTypes {
@@ -39,6 +41,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -75,4 +78,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
 }
