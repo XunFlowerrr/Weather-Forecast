@@ -23,28 +23,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize adapter and recyclerView here
-        recyclerView = findViewById(R.id.recyclerView_1)
-        adapterHourly = HourlyAdapter()
-
         initRecyclerView()
         setVariable()
 
-        var currentLocationFetcher : CurrentLocationFetcher = CurrentLocationFetcher(this)
-        currentLocationFetcher.fetchLastLocation(){response ->
+        var currentLocationFetcher: CurrentLocationFetcher = CurrentLocationFetcher(this)
+        currentLocationFetcher.fetchLastLocation() { response ->
             if (response != null) {
                 Log.d("MainActivity", "$response")
 
-                initCurrentWeatherFetcher(CurrentWeatherFetcher(BuildConfig.Weather_API_KEY), response)
+                initCurrentWeatherFetcher(
+                    CurrentWeatherFetcher(BuildConfig.Weather_API_KEY),
+                    response
+                )
             }
 
         }
-
-
     }
 
-    private fun initCurrentWeatherFetcher(currentWeatherFetcher: CurrentWeatherFetcher, query : String) {
-        var currentWeatherDomain : CurrentWeatherDomain
+    private fun initCurrentWeatherFetcher(
+        currentWeatherFetcher: CurrentWeatherFetcher,
+        query: String
+    ) {
+        var currentWeatherDomain: CurrentWeatherDomain
         currentWeatherFetcher.fetchCurrentWeather(query) { response ->
             if (response != null) {
 
@@ -80,23 +80,22 @@ class MainActivity : ComponentActivity() {
 
     private fun setVariable() {
         val nextButton: TextView = findViewById(R.id.nextButton)
-        nextButton.setOnClickListener { view ->
+        nextButton.setOnClickListener {
             val intent = Intent(this, FutureActivity::class.java)
             startActivity(intent)
         }
     }
 
     private fun initRecyclerView() {
-        val itemListInit: ArrayList<Hourly> = ArrayList()
-        itemListInit.add(Hourly("12:00", 12, "snowy"))
-        itemListInit.add(Hourly("13:00", 13, "storm"))
-        itemListInit.add(Hourly("14:00", 14, "sunny"))
-        itemListInit.add(Hourly("15:00", 15, "windy"))
-        itemListInit.add(Hourly("16:00", 16, "rainy"))
+        recyclerView = findViewById(R.id.recyclerView_1)
+        adapterHourly = HourlyAdapter(
+            items = (10..23).map {
+                Hourly(hour = "$it:00", temp = 15 - (it / 3), picResId = R.drawable.snowy)
+            }
+        )
 
-        adapterHourly.items = itemListInit
-
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = adapterHourly
     }
 }

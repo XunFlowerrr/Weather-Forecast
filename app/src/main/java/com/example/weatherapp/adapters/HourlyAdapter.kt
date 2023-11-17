@@ -1,38 +1,33 @@
 package com.example.weatherapp.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
 import com.example.weatherapp.domains.Hourly
 
-class HourlyAdapter : RecyclerView.Adapter<HourlyAdapter.ViewHolder>() {
-
-    var items: ArrayList<Hourly> = ArrayList()
-
+class HourlyAdapter(
+    private val items: List<Hourly> = listOf()
+) : RecyclerView.Adapter<HourlyAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var hourText: TextView = itemView.findViewById(R.id.hourlyText)
-        var tempText: TextView = itemView.findViewById(R.id.tempText)
+        private val hourText: TextView = itemView.findViewById(R.id.hourlyText)
+        private val tempText: TextView = itemView.findViewById(R.id.tempText)
+        private val picView: ImageView = itemView.findViewById(R.id.pic)
 
-        @SuppressLint("DiscouragedApi")
-        fun setPicPath(picPath: String) {
-            val drawableResourceId: Int = itemView.resources.getIdentifier(
-                picPath,
-                "drawable",
-                itemView.context.packageName
-            )
-
-            Glide.with(itemView.context).load(drawableResourceId)
-                .into(itemView.findViewById(R.id.pic))
+        fun bind(hourly: Hourly) {
+            hourText.text = hourly.hour
+            tempText.text = itemView.resources.getString(R.string.temp_celsius, hourly.temp)
+            Glide.with(itemView.context).load(hourly.picResId)
+                .into(picView)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflate: View =
+        val inflate =
             LayoutInflater.from(parent.context).inflate(R.layout.viewholder_hourly, parent, false)
         return ViewHolder(inflate)
     }
@@ -41,12 +36,7 @@ class HourlyAdapter : RecyclerView.Adapter<HourlyAdapter.ViewHolder>() {
         return items.size
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(items[position]) {
-            holder.hourText.text = hour
-            holder.tempText.text = "${temp}C"
-            holder.setPicPath(picPath)
-        }
+        holder.bind(items[position])
     }
 }

@@ -12,15 +12,12 @@ import com.example.weatherapp.domains.FutureDomain
 
 
 class FutureActivity : AppCompatActivity() {
-
     private lateinit var adapterFuture: FutureAdapter
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_future)
-        recyclerView = findViewById(R.id.recyclerView_2)
-        adapterFuture = FutureAdapter()
 
         initRecyclerView()
         setVariable()
@@ -29,31 +26,63 @@ class FutureActivity : AppCompatActivity() {
     private fun setVariable() {
         val backButton: ConstraintLayout = findViewById(R.id.backButton)
 
-        backButton.setOnClickListener{ view ->
+        backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
     private fun initRecyclerView() {
-        val itemListInit: ArrayList<FutureDomain> = ArrayList()
-        itemListInit.add(FutureDomain("Mon", "snowy", "Sunny", 20, 12))
-        itemListInit.add(FutureDomain("Tue", "snowy", "Sunny", 20, 12))
-        itemListInit.add(FutureDomain("Wed", "snowy", "Sunny", 20, 12))
-        itemListInit.add(FutureDomain("Thu", "snowy", "Sunny", 20, 12))
-        itemListInit.add(FutureDomain("Fri", "snowy", "Sunny", 20, 12))
-        itemListInit.add(FutureDomain("Sat", "snowy", "Sunny", 20, 12))
-
-
-        adapterFuture.items = itemListInit
-
+        recyclerView = findViewById(R.id.recyclerView_2)
+        adapterFuture = FutureAdapter(
+            listOf(
+                FutureDomain(
+                    day = "Mon",
+                    picResId = R.drawable.sunny,
+                    status = "Sunny",
+                    highTemp = 20,
+                    lowTemp = 12
+                ),
+                FutureDomain(
+                    day = "Tue",
+                    picResId = R.drawable.cloudy_sunny,
+                    status = "Cloudy Sunny",
+                    highTemp = 22,
+                    lowTemp = 15
+                ),
+                FutureDomain(
+                    day = "Wed",
+                    picResId = R.drawable.snowy,
+                    status = "Sunny",
+                    highTemp = 21,
+                    lowTemp = 13
+                ),
+                FutureDomain(
+                    day = "Thu",
+                    picResId = R.drawable.snowy,
+                    status = "Sunny",
+                    highTemp = 20,
+                    lowTemp = 12
+                ),
+                FutureDomain(
+                    day = "Fri",
+                    picResId = R.drawable.snowy,
+                    status = "Sunny",
+                    highTemp = 20,
+                    lowTemp = 12
+                ),
+                FutureDomain(
+                    day = "Sat",
+                    picResId = R.drawable.snowy,
+                    status = "Sunny",
+                    highTemp = 20,
+                    lowTemp = 12
+                ),
+            )
+        )
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapterFuture
-
-
     }
 }
 
