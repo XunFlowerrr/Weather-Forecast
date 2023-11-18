@@ -44,7 +44,7 @@ suspend fun Activity.ensurePermissionsGranted(permissions: Array<String>) =
             return@suspendCoroutine
         }
 
-        val requestPermissionCode = Math.random().toInt()
+        val requestPermissionCode = (Math.random() * 1000).toInt()
 
         /**
          * app will caches if either of these permissions were not granted
