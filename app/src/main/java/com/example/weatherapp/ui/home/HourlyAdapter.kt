@@ -20,7 +20,7 @@ class HourlyAdapter(
 
         fun bind(hourly: Hourly) {
             hourText.text = hourly.hour
-            tempText.text = itemView.resources.getString(R.string.temp_celsius, hourly.temp)
+            tempText.text = itemView.resources.getString(R.string.template_celsius, hourly.temp)
             Glide.with(itemView.context).load(hourly.picResId)
                 .into(picView)
         }

@@ -24,8 +24,8 @@ class FutureAdapter(
         fun bind(future: FutureDomain) {
             dayText.text = future.day
             status.text = future.status
-            lowText.text = itemView.resources.getString(R.string.temp_celsius, future.lowTemp)
-            highText.text = itemView.resources.getString(R.string.temp_celsius, future.highTemp)
+            lowText.text = itemView.resources.getString(R.string.template_celsius, future.lowTemp)
+            highText.text = itemView.resources.getString(R.string.template_celsius, future.highTemp)
             Glide.with(itemView.context).load(future.picResId)
                 .into(picView)
         }

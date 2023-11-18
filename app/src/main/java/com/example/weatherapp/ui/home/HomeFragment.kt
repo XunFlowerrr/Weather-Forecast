@@ -1,11 +1,11 @@
 package com.example.weatherapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        requireActivity().apply {
+        with(requireActivity()) {
             val currentLocationFetcher = CurrentLocationFetcher(this)
             val currentWeatherFetcher = CurrentWeatherFetcher(BuildConfig.Weather_API_KEY)
 
@@ -74,6 +74,31 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateCurrentWeather(currentWeatherDomain: CurrentWeatherDomain) {
-        Log.d("CurrentWeather", currentWeatherDomain.toString())
+        with(requireView()) {
+            val currentStatus: TextView = findViewById(R.id.currentStatusText)
+            currentStatus.text = currentWeatherDomain.currentStatus
+
+            val currentTemp: TextView = findViewById(R.id.currentTempText)
+            currentTemp.text = currentWeatherDomain.currentTemp.toString()
+
+            val currentDate: TextView = findViewById(R.id.currentDateAndTimeText)
+            currentDate.text = currentWeatherDomain.dateTime()
+
+            val currentRain: TextView = findViewById(R.id.currentRainText)
+            currentRain.text = resources.getString(R.string.template_percent, (currentWeatherDomain.currentRain * 100).toInt())
+
+            val currentWindSpeed: TextView = findViewById(R.id.currentWindSpeedText)
+            currentWindSpeed.text = resources.getString(R.string.template_killometer_per_hour, currentWeatherDomain.currentWindSpeed)
+
+            val currentHumidity: TextView = findViewById(R.id.currentHumidityText)
+            currentHumidity.text = resources.getString(R.string.template_percent, currentWeatherDomain.currentHumidity)
+
+            val currentLocation: TextView = findViewById(R.id.currentLocationText)
+            currentLocation.text = currentWeatherDomain.currentLocation
+        }
     }
+}
+
+fun CurrentWeatherDomain.dateTime(): String {
+    return "$currentDate $currentTime"
 }
