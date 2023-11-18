@@ -2,39 +2,36 @@ package com.example.weatherapp.api
 
 import android.util.Log
 import com.example.weatherapp.domains.CurrentWeatherDomain
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.suspendCancellableCoroutine
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
+import kotlin.coroutines.resumeWithException
 
 
 class CurrentWeatherFetcher(private val apiKey: String) {
     private val client = OkHttpClient()
 
-    fun fetchCurrentWeather(query: String, callback: (String?) -> Unit) {
+    suspend fun fetchCurrentWeather(query: String): CurrentWeatherDomain {
         val url = "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$query"
         val request = Request.Builder().url(url).build()
 
-        client.newCall(request).enqueue(object : okhttp3.Callback {
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-                e.printStackTrace()
-                callback(null)
-            }
+        val response = client.newCall(request).await()
 
-            override fun onResponse(
-                call: okhttp3.Call, response: okhttp3.Response
-            ) {
-                response.use {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+        response.use {
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+            val responseBody = response.body?.string() ?: throw IOException("body is empty")
 
-                    val responseBody = response.body?.string()
-                    callback(responseBody)
-                }
-            }
-        })
+            return parseCurrentWeather(responseBody)
+        }
     }
 
-    fun parseCurrentWeather(responseBody: String): CurrentWeatherDomain {
+    private fun parseCurrentWeather(responseBody: String): CurrentWeatherDomain {
         val jsonObj = JSONObject(responseBody)
         val currentWeatherDomain = CurrentWeatherDomain()
 
@@ -69,4 +66,21 @@ class CurrentWeatherFetcher(private val apiKey: String) {
 
         return currentWeatherDomain
     }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+suspend fun Call.await(): Response = suspendCancellableCoroutine { continuation ->
+    continuation.invokeOnCancellation {
+        cancel()
+    }
+
+    enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            continuation.resumeWithException(e)
+        }
+
+        override fun onResponse(call: Call, response: Response) {
+            continuation.resume(value = response, onCancellation = { call.cancel() })
+        }
+    })
 }

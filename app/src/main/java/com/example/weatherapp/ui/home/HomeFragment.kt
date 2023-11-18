@@ -1,15 +1,24 @@
 package com.example.weatherapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.R
+import com.example.weatherapp.api.CurrentLocationFetcher
+import com.example.weatherapp.api.CurrentWeatherFetcher
+import com.example.weatherapp.domains.CurrentWeatherDomain
 import com.example.weatherapp.domains.Hourly
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     override fun onCreateView(
@@ -46,5 +55,25 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_homeFragment_to_futureFragment)
             }
         }
+
+        requireActivity().apply {
+            val currentLocationFetcher = CurrentLocationFetcher(this)
+            val currentWeatherFetcher = CurrentWeatherFetcher(BuildConfig.Weather_API_KEY)
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val location = currentLocationFetcher.getLocation()
+
+                withContext(Dispatchers.IO) {
+                    val currentWeather =
+                        currentWeatherFetcher.fetchCurrentWeather("${location.latitude},${location.longitude}")
+
+                    updateCurrentWeather(currentWeather)
+                }
+            }
+        }
+    }
+
+    private fun updateCurrentWeather(currentWeatherDomain: CurrentWeatherDomain) {
+        Log.d("CurrentWeather", currentWeatherDomain.toString())
     }
 }
