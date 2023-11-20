@@ -1,8 +1,12 @@
 package com.example.weatherapp.domains
+
+import androidx.annotation.DrawableRes
+
 data class FutureDomain(
-    var day: String = "",
-    var picPath: String = "",
-    var status: String = "",
-    var highTemp: Int = 0,
-    var lowTemp: Int = 0
+    val day: String = "",
+    @DrawableRes
+    val picResId: Int = 0,
+    val status: String = "",
+    val highTemp: Int = 0,
+    val lowTemp: Int = 0
 )

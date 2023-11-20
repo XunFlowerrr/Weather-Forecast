@@ -1,7 +1,10 @@
 package com.example.weatherapp.domains
 
+import androidx.annotation.DrawableRes
+
 data class Hourly(
-    var hour: String = "",
-    var temp: Int = 0,
-    var picPath: String = ""
+    val hour: String = "",
+    val temp: Int = 0,
+    @DrawableRes
+    val picResId: Int = 0
 )
