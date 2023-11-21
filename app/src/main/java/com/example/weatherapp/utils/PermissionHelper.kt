@@ -1,6 +1,5 @@
 package com.example.weatherapp.utils
 
-import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import kotlin.coroutines.resume
@@ -50,13 +49,7 @@ suspend fun Activity.ensurePermissionsGranted(permissions: Array<String>) =
          * app will caches if either of these permissions were not granted
          * Todo: handle [PermissionNotGrantedException]
          */
-        requestPermissions(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
-            requestPermissionCode
-        )
+        requestPermissions(permissions, requestPermissionCode)
 
         PermissionHelper.addListener(object : PermissionHelper.Listener {
             override fun onResult(
