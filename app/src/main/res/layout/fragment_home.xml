@@ -64,7 +64,7 @@
             android:text="20°C"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="63dp"
+            android:textSize="63sp"
             android:visibility="invisible"
             android:textStyle="bold" />
 

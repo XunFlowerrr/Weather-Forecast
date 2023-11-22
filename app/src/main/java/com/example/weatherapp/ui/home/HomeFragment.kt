@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.R
+import com.example.weatherapp.api.CurrentForecastFetcher
 import com.example.weatherapp.api.CurrentLocationFetcher
 import com.example.weatherapp.api.CurrentWeatherFetcher
 import com.example.weatherapp.domains.CurrentWeatherDomain
@@ -31,17 +32,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<RecyclerView>(R.id.recyclerView_1).apply {
-            layoutManager = LinearLayoutManager(
-                this@HomeFragment.context, LinearLayoutManager.HORIZONTAL, false
-            )
-
-            adapter = HourlyAdapter(items = (10..23).map {
-                Hourly(
-                    hour = "$it:00", temp = 15 - (it / 3), picResId = R.drawable.snowy
-                )
-            })
-        }
 
         view.findViewById<View>(R.id.nextButton)?.apply {
             setOnClickListener {
@@ -52,6 +42,7 @@ class HomeFragment : Fragment() {
         with(requireActivity()) {
             val currentLocationFetcher = CurrentLocationFetcher(this)
             val currentWeatherFetcher = CurrentWeatherFetcher(BuildConfig.Weather_API_KEY)
+            val currentForecastFetcher = CurrentForecastFetcher(this,BuildConfig.Weather_API_KEY)
 
             viewLifecycleOwner.lifecycleScope.launch {
                 val location = currentLocationFetcher.getLocation()
@@ -59,15 +50,34 @@ class HomeFragment : Fragment() {
                 withContext(Dispatchers.IO) {
                     val currentWeather =
                         currentWeatherFetcher.fetchCurrentWeather("${location.latitude},${location.longitude}")
+                    val currentForecast =
+                        currentForecastFetcher.fetchCurrentForecast("${location.latitude},${location.longitude}")
 
                     updateCurrentWeather(currentWeather)
+                    updateCurrentForecast(currentForecast)
                 }
             }
         }
     }
 
+    private fun updateCurrentForecast(currentForecast: List<Hourly>) {
+        requireActivity().runOnUiThread {
+            with(requireView()) {
+                val hourlyAdapter = HourlyAdapter(currentForecast)
+                findViewById<RecyclerView>(R.id.recyclerView_1).apply {
+                    layoutManager = LinearLayoutManager(
+                        this@HomeFragment.context, LinearLayoutManager.HORIZONTAL, false
+                    )
+
+                    adapter = hourlyAdapter
+                }
+            }
+        }
+
+    }
+
     private fun updateCurrentWeather(currentWeatherDomain: CurrentWeatherDomain) {
-        requireActivity().runOnUiThread() {
+        requireActivity().runOnUiThread {
             with(requireView()) {
 
                 val currentStatus: TextView = findViewById(R.id.currentStatusText)
