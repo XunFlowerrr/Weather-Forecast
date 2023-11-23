@@ -9,8 +9,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.Calendar
 
-class CurrentForecastFetcher(private val context: Context, private val apiKey: String) {
-    private val client = OkHttpClient()
+class CurrentForecastFetcher(private val client : OkHttpClient, private val context: Context, private val apiKey: String) {
 
     suspend fun fetchCurrentForecast(query: String): List<Hourly> {
         val url = "http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$query"

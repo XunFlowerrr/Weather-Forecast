@@ -15,8 +15,7 @@ import java.io.IOException
 import kotlin.coroutines.resumeWithException
 
 
-class CurrentWeatherFetcher(private val context: Context, private val apiKey: String) {
-    private val client = OkHttpClient()
+class CurrentWeatherFetcher(private val client: OkHttpClient ,private val context: Context, private val apiKey: String) {
 
     suspend fun fetchCurrentWeather(query: String): CurrentWeatherDomain {
         val url = "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$query"

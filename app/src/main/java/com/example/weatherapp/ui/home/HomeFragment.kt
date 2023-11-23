@@ -1,12 +1,12 @@
 package com.example.weatherapp.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +22,7 @@ import com.example.weatherapp.domains.Hourly
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 
 class HomeFragment : Fragment() {
     override fun onCreateView(
@@ -42,9 +43,10 @@ class HomeFragment : Fragment() {
         }
 
         with(requireActivity()) {
+            val client = OkHttpClient()
             val currentLocationFetcher = CurrentLocationFetcher(this)
-            val currentWeatherFetcher = CurrentWeatherFetcher(this, BuildConfig.Weather_API_KEY)
-            val currentForecastFetcher = CurrentForecastFetcher(this, BuildConfig.Weather_API_KEY)
+            val currentWeatherFetcher = CurrentWeatherFetcher(client,this, BuildConfig.Weather_API_KEY)
+            val currentForecastFetcher = CurrentForecastFetcher(client,this, BuildConfig.Weather_API_KEY)
 
             viewLifecycleOwner.lifecycleScope.launch {
                 val location = currentLocationFetcher.getLocation()
