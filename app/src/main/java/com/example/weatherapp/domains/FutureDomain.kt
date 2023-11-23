@@ -7,6 +7,9 @@ data class FutureDomain(
     @DrawableRes
     val picResId: Int = 0,
     val status: String = "",
-    val highTemp: Int = 0,
-    val lowTemp: Int = 0
+    val highTemp: Double = 0.0,
+    val lowTemp: Double = 0.0,
+    val rainD: Double = 0.0,
+    val humidityD: Double = 0.0,
+    val windD: Double = 0.0
 )

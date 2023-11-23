@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.R
 import com.example.weatherapp.api.CurrentForecastFetcher
@@ -41,8 +43,8 @@ class HomeFragment : Fragment() {
 
         with(requireActivity()) {
             val currentLocationFetcher = CurrentLocationFetcher(this)
-            val currentWeatherFetcher = CurrentWeatherFetcher(BuildConfig.Weather_API_KEY)
-            val currentForecastFetcher = CurrentForecastFetcher(this,BuildConfig.Weather_API_KEY)
+            val currentWeatherFetcher = CurrentWeatherFetcher(this, BuildConfig.Weather_API_KEY)
+            val currentForecastFetcher = CurrentForecastFetcher(this, BuildConfig.Weather_API_KEY)
 
             viewLifecycleOwner.lifecycleScope.launch {
                 val location = currentLocationFetcher.getLocation()
@@ -84,7 +86,9 @@ class HomeFragment : Fragment() {
                 currentStatus.text = currentWeatherDomain.currentStatus
                 currentStatus.visibility = View.VISIBLE
 
-                val currentStatusImg = findViewById<View>(R.id.currentStatusImg)
+                val currentStatusImg = findViewById<ImageView>(R.id.currentStatusImg)
+                Glide.with(this@HomeFragment).load(currentWeatherDomain.currentPicResId)
+                    .into(currentStatusImg)
                 currentStatusImg.visibility = View.VISIBLE
 
                 val homeProgressBar = findViewById<View>(R.id.homeProgressBar)
@@ -98,7 +102,7 @@ class HomeFragment : Fragment() {
                 currentDate.text = currentWeatherDomain.dateTime()
                 currentDate.visibility = View.VISIBLE
 
-                val currentRain: TextView = findViewById(R.id.currentRainText)
+                val currentRain: TextView = findViewById(R.id.tomorrowRain)
                 currentRain.text = resources.getString(
                     R.string.template_percent, (currentWeatherDomain.currentRain * 100).toInt()
                 )
