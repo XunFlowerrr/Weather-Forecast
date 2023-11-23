@@ -17,12 +17,13 @@ class HourlyAdapter(
         private val hourText: TextView = itemView.findViewById(R.id.hourlyText)
         private val tempText: TextView = itemView.findViewById(R.id.tempText)
         private val picView: ImageView = itemView.findViewById(R.id.pic)
+        private val statusText : TextView = itemView.findViewById(R.id.statusTextHourly)
 
         fun bind(hourly: Hourly) {
             hourText.text = hourly.hour
             tempText.text = itemView.resources.getString(R.string.template_celsius, hourly.temp)
-            Glide.with(itemView.context).load(hourly.picResId)
-                .into(picView)
+            Glide.with(itemView.context).load(hourly.picResId).into(picView)
+            statusText.text = hourly.status
         }
     }
 

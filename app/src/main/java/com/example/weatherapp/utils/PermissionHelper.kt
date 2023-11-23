@@ -50,11 +50,7 @@ suspend fun Activity.ensurePermissionsGranted(permissions: Array<String>) =
          * app will caches if either of these permissions were not granted
          * Todo: handle [PermissionNotGrantedException]
          */
-        requestPermissions(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
+        requestPermissions(permissions,
             requestPermissionCode
         )
 

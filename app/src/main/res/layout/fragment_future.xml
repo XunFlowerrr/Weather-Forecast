@@ -39,14 +39,23 @@
             android:background="@drawable/background2"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/futureProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:visibility="visible" />
+
             <LinearLayout
+                android:id="@+id/linear_layout_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/background2"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
+
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/tomorrowImg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -73,7 +82,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/tomorrowTemp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -83,7 +92,7 @@
                         android:textSize="43sp" />
 
                     <TextView
-                        android:id="@+id/mainStatus"
+                        android:id="@+id/tomorrowStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Mostly Cloudy"
@@ -118,13 +127,14 @@
                         android:src="@drawable/rain" />
 
                     <TextView
-                        android:id="@+id/currentRainText"
+                        android:id="@+id/tomorrowRain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="22%"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -153,13 +163,14 @@
                         android:src="@drawable/wind" />
 
                     <TextView
-                        android:id="@+id/windSpeed"
+                        android:id="@+id/tomorrowWind"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="12 km/h"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/windSpeedLabel"
@@ -188,13 +199,14 @@
                         android:src="@drawable/humidity" />
 
                     <TextView
-                        android:id="@+id/humidityText"
+                        android:id="@+id/tomorrowHumidity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="22%"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/humidityLabel"

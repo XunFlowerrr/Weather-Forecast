@@ -1,5 +1,6 @@
 package com.example.weatherapp.api
 
+import android.content.Context
 import android.util.Log
 import com.example.weatherapp.domains.CurrentWeatherDomain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,8 +15,7 @@ import java.io.IOException
 import kotlin.coroutines.resumeWithException
 
 
-class CurrentWeatherFetcher(private val apiKey: String) {
-    private val client = OkHttpClient()
+class CurrentWeatherFetcher(private val client: OkHttpClient ,private val context: Context, private val apiKey: String) {
 
     suspend fun fetchCurrentWeather(query: String): CurrentWeatherDomain {
         val url = "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$query"
@@ -51,6 +51,23 @@ class CurrentWeatherFetcher(private val apiKey: String) {
         val currentWindSpeed = currentObj.getDouble("wind_kph")
         val currentHumidity = currentObj.getInt("humidity")
         val currentLocation = "$locationName | $locationCountry"
+
+        val isDay = currentObj.getInt("is_day")
+        var currentStatusId = currentObj.getJSONObject("condition").getString("icon")
+        currentStatusId = currentStatusId.substringAfterLast("/")
+        val regex = Regex("[0-9]+")
+        val currentStatusNum = regex.find(currentStatusId)?.value?.toInt()
+        val currentStatusResource = if (isDay == 1) {
+            "day_$currentStatusNum"
+        } else {
+            "night_$currentStatusNum"
+        }
+
+        context.resources.getIdentifier(currentStatusResource, "drawable", context.packageName)
+            .let {
+                currentWeatherDomain.currentPicResId = it
+            }
+
 
         // Updating the CurrentWeatherDomain object
         currentWeatherDomain.currentStatus = currentStatus

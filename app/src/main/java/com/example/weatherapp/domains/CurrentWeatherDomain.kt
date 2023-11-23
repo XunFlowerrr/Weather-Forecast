@@ -8,6 +8,7 @@ data class CurrentWeatherDomain(
     var currentRain: Double = 0.0,
     var currentWindSpeed: Double = 0.0,
     var currentHumidity: Int = 0,
-    var currentLocation: String = ""
+    var currentLocation: String = "",
+    var currentPicResId: Int = 0
 
 )
