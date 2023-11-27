@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background2"
+        android:background="@drawable/background4"
         android:orientation="vertical">
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_margin="8dp"
             android:text="TextView"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <ImageView
@@ -38,7 +38,7 @@
             android:layout_margin="8dp"
             android:text="20"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -46,10 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:text="TextView"
             android:textAlignment="center"
-            android:textSize="14sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
 
-            android:text="TextView" />
+            android:textSize="14sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

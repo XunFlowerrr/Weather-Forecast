@@ -19,6 +19,7 @@ import com.example.weatherapp.api.CurrentLocationFetcher
 import com.example.weatherapp.api.CurrentWeatherFetcher
 import com.example.weatherapp.domains.CurrentWeatherDomain
 import com.example.weatherapp.domains.Hourly
+import com.example.weatherapp.utils.SettingHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,6 +44,8 @@ class HomeFragment : Fragment() {
         }
 
         with(requireActivity()) {
+            val settingHelper = SettingHelper()
+            settingHelper.askToEnableLocation(this)
             val client = OkHttpClient()
             val currentLocationFetcher = CurrentLocationFetcher(this)
             val currentWeatherFetcher = CurrentWeatherFetcher(client,this, BuildConfig.Weather_API_KEY)
