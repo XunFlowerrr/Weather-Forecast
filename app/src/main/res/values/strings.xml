@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather App</string>
+    <string name="app_name">Weather Forecast</string>
     <string name="title_activity_future">FutureActivity</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
