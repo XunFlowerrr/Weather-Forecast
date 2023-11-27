@@ -25,7 +25,7 @@ The Weather Forecast App is a application that provides users with up-to-date we
 
 To install the Weather Forecast App, follow these steps:
 
-1. Download the APK file from the [releases page]()
+1. Download the APK file from the [releases page](https://github.com/XunFlowerrr/Weather-Forecast/releases)
 
 2. Open the APK file on your Android device.
 
@@ -58,7 +58,5 @@ The Weather Forecast App relies on the following libraries and APIs:
 - [WeatherAPI](https://www.weatherapi.com/) for providing weather data.
 
 - [Glide](https://github.com/bumptech/glide) for efficient image loading and caching.
-
-- [Gson](https://github.com/google/gson) for converting Java objects to JSON and vice versa.
 
 We would like to express our gratitude to the creators and contributors of these libraries for their valuable work.
